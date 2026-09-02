@@ -393,7 +393,7 @@ body.phone .card:first-of-type{margin-top:4px}
 body.phone .psec{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);font-weight:700;padding:14px 0 4px}
 body.phone .prow{padding:13px 0}
 body.phone .prow .pname,body.phone .prow button.pname.colname{font-size:15px;font-weight:500}
-body.phone .prow .pcell,body.phone .prow input.cell{min-width:0;width:auto;background:transparent!important;border:0!important;padding:0!important;font-size:15px;font-weight:600;text-align:right;color:var(--ink)!important}
+body.phone .prow .pcell:not(.cbox),body.phone .prow input.cell{min-width:0;width:auto;background:transparent!important;border:0!important;padding:0!important;font-size:15px;font-weight:600;text-align:right;color:var(--ink)!important}
 body.phone .prow b{font-size:15px;font-weight:700}
 body.phone .filters{gap:7px;margin-bottom:14px}
 body.phone .filters .chip{padding:9px 15px;font-size:14px;border-radius:11px}
@@ -971,6 +971,54 @@ details.pmon[open]>summary{border-bottom:1px solid rgba(128,128,128,.18)}
 details.pmon .psum{display:flex;gap:14px;font-variant-numeric:tabular-nums;font-size:13px}
 details.pmon .pmbody{padding:6px 15px 13px}
 details.pmon .ptot{margin-top:10px;border-top:1px solid rgba(128,128,128,.18);padding-top:8px}
+
+/* ===== rediseño móvil: tabla vertical con el lenguaje de colores del escritorio ===== */
+body.phone .prow .pcell.cbox{display:block;min-width:118px;max-width:152px;padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+body.phone .prow .pcell.cbox:not(.duep):not(.paidp):not(.incbox):not(.mirp){background:transparent;border:1px dashed var(--hair);color:var(--sub);font-weight:500}
+body.phone .prow .pcell.cbox.mirp:not(.duep):not(.paidp){background:#d6e6fa;color:#22497f;border:1px solid #b9d4f2}
+html.dark body.phone .prow .pcell.cbox.mirp:not(.duep):not(.paidp){background:#1c3050;color:#a8c4ea;border-color:#2e4870}
+body.phone .pname.mirn{color:#3b6db4}
+html.dark body.phone .pname.mirn{color:#8fb4e6}
+.pmon .pmlab{font-size:15px;font-weight:700}
+.pmon.pmpast>summary{opacity:.6}
+.pmon .psum{display:flex;gap:6px;align-items:center}
+.pmon .psum b{padding:4px 9px;border-radius:7px;font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.pmon .psum .pinc{background:#eaf7ee;color:#13682f}
+.pmon .psum .pspd{background:#eef0f3;color:#4a4a52}
+.pmon .psum .pdue{background:#f9e3e3;color:#a33d38}
+html.dark .pmon .psum .pinc{background:#16361f;color:#7fd79a}
+html.dark .pmon .psum .pspd{background:#26262c;color:#b8b8c2}
+html.dark .pmon .psum .pdue{background:#3a2426;color:#ee9a9a}
+/* Activity: cada grupo su tarjeta, montos con color */
+body.phone{--spendink:#b3452e}
+html.dark body.phone{--spendink:#e08a7a}
+body.phone .card:has(.mvgroup){background:transparent;border:0;padding:0;box-shadow:none}
+body.phone .mvgroup{background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:6px 14px;margin-bottom:10px}
+body.phone .mvgroup .mvgrp .t{font-size:15px}
+.okk{color:var(--green);font-weight:700}
+/* Settings: una columna, nav horizontal deslizable */
+body.phone .ajwrap{display:flex;flex-direction:column}
+body.phone .ajnav{display:flex;flex-direction:row;overflow-x:auto;width:auto;max-width:none;min-width:0;padding:6px;gap:6px;position:static;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+body.phone .ajnav::-webkit-scrollbar{display:none}
+body.phone .ajnav-h{display:none}
+body.phone .ajnavi{white-space:nowrap;flex:none;border-radius:999px;padding:8px 14px;width:auto}
+body.phone .ajbody{padding:14px 2px;min-width:0}
+body.phone .ajbody [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+body.phone .ajbody .card{max-width:none}
+
+/* paleta phone explicita (las reglas de escritorio estan scoped a table.fit) */
+body.phone .prow .pcell.cbox.paidp{background:#dcdce1;color:#6c6c74;border:1px solid #c2c2ca}
+body.phone .prow .pcell.cbox.duep{background:#f7dada;color:#b3261e;border:1px solid #e3aeae}
+body.phone .prow .pcell.cbox.incbox{background:#eaf7ee;color:#13682f;border:1px solid #bfe3cc}
+body.phone .prow .pcell.cbox.hasnote{border:2px solid #6ba3e0}
+html.dark body.phone .prow .pcell.cbox.paidp{background:#2a2a30;color:#9a9aa2;border-color:#54545c}
+html.dark body.phone .prow .pcell.cbox.duep{background:#3a2a2c;color:#ee9a9a;border-color:#6a4446}
+html.dark body.phone .prow .pcell.cbox.incbox{background:#16361f;color:#7fd79a;border-color:#2c5a3a}
+/* cabecera de mes: sin salto de linea */
+details.pmon>summary{gap:8px}
+.pmon .pmlab{white-space:nowrap;flex:none}
+.pmon .psum{flex:1;justify-content:flex-end;min-width:0;flex-wrap:nowrap}
+.pmon .psum b{white-space:nowrap;padding:4px 8px;font-size:12px}
 </style>
 </head>
 <body>
@@ -1557,14 +1605,14 @@ function viewPlanillaPhone(){
   const bodyFor=(m)=>{
     const incRows=incIds.map(id=>{const v=cellI(a,id,m);const isPrim=id===pid;return `<div class="prow"><button class="pname colname" data-a="${a}" data-id="${id}" style="color:var(--green)">${cn(a,id)}</button>${isPrim?`<span class="gcell pcell cbox incbox" data-fa="${a}" data-fid="${id}" data-fm="${m}" data-tp="ingreso">${cf(v,nat,cur)}</span>`:incCell(a,id,m,v,nat,cur).replace(/^<td class="inccol">|<\/td>$/g,'')}</div>`;}).join('');
     const expRows=gastoColsFor(a).map(c=>{if(c.apt){const v=aptSum(a,m);return `<div class="prow"><span class="pname">${tr.apt}</span><span class="pcell cbox duep">${D(v)}</span></div>`;}const x=cellG(a,c.id,m),sv=cShow(x),isMortUF=(a==='Chile'&&c.id==='hipotecario'&&state.mortUF),disp=sv?(isMortUF?ufFmt(sv/valueFor(m)):D(sv)):fmt(0,cur),cls=x.paid?'paidp':(x.amount?'duep':''),nt=noteOf(a,c.id,m);return `<div class="prow"><button class="pname colname" data-a="${a}" data-id="${c.id}">${cn(a,c.id)}${isMortUF?' (UF)':''}</button><span class="gcell pcell cbox ${cls} ${nt?'hasnote':''}" data-fa="${a}" data-fid="${c.id}" data-fm="${m}">${disp}</span></div>`;}).join('');
-    const mirRows=(a==='Irlanda'?linkedChileCats():[]).map(c=>{const x=cellG('Chile',c.id,m),cls=x.paid?'paidp':(x.amount?'duep':'');return `<div class="prow"><span class="pname">${cn('Chile',c.id)}</span><span class="pcell cbox ${cls}">${cf(cShow(x),'CLP',cur)}</span></div>`;}).join('');
+    const mirRows=(a==='Irlanda'?linkedChileCats():[]).map(c=>{const x=cellG('Chile',c.id,m),cls=x.paid?'paidp':(x.amount?'duep':'');return `<div class="prow"><span class="pname mirn">${cn('Chile',c.id)}</span><span class="pcell cbox mirp ${cls}">${cf(cShow(x),'CLP',cur)}</span></div>`;}).join('');
     const inc=savPers(a,m),paid=gPaid(a,m),due=gDue(a,m),exp=gExp(a,m);
     const totals=`<div class="prow"><span class="pname">${tr.sum_g}</span><b>${D(paid)}</b></div><div class="prow"><span class="pname" style="color:var(--green)">${tr.c_funds}</span><b style="color:var(--green)">${D(inc)}</b></div><div class="prow"><span class="pname">${tr.c_due}</span><b>${D(due)} <span style="opacity:.55">/ ${D(exp)}</span></b></div>`;
     return `<div class="pmbody"><div class="psec" style="color:var(--green)">${tr.c_save}</div>${incRows}<div class="psec" style="margin-top:10px">${tr.mov_exp}</div>${expRows}${mirRows}<div class="ptot">${totals}</div></div>`;
   };
   const yr=+state.gridYear,months=MONTHS.filter(x=>x.slice(0,4)===String(yr));
   const openM=months.includes(sel)?sel:(months.includes(defaultMonth())?defaultMonth():months[0]);
-  const secs=months.map(mm=>{const paid=gPaid(a,mm),inc=savPers(a,mm);return `<details class="card pmon"${mm===openM?' open':''}><summary><span>${mShort(mm)}</span><span class="psum"><b style="color:var(--green)">${D(inc)}</b><b>${D(paid)}</b></span></summary>${bodyFor(mm)}</details>`;}).join('');
+  const curM=defaultMonth();const secs=months.map(mm=>{const paid=gPaid(a,mm),inc=savPers(a,mm),dd=gDue(a,mm);return `<details class="card pmon${mm<curM?' pmpast':''}"${mm===openM?' open':''}><summary><span class="pmlab">${mShort(mm).replace(/[-\s]?\d{4}$/,"")}</span><span class="psum">${dd>0?`<b class="pdue">${D(dd)}</b>`:''}<b class="pinc">${D(inc)}</b><b class="pspd">${D(paid)}</b></span></summary>${bodyFor(mm)}</details>`;}).join('');
   const ynav=`<div class="filters" style="justify-content:center;align-items:center;gap:10px"><button class="chip" id="pyr" ${yr<=YMIN?'disabled':''}>‹</button><b style="min-width:56px;text-align:center">${yr}</b><button class="chip" id="nyr" ${yr>=YMAX?'disabled':''}>›</button></div>`;
   let refrow='';{const rl=(state.refsLabel&&state.refsLabel[state.lang])||tr.refs_lbl;refrow=`<div class="card" style="margin-top:14px"><div class="reflbl" id="refslbl" style="display:block;margin-bottom:8px">${escHtml(rl)} ✎</div><div class="filters" style="margin:0">`+(state.refsA[a]||[]).map((r,i)=>`<button class="chip ref" data-refa="${a}" data-ref="${i}">${escHtml(r.label)}: ${fmt(r.amount,nativeCur(a))}</button>`).join('')+`<button class="chip ref" data-refa="${a}" data-ref="new">+</button></div></div>`;}
   return `<div class="title">${tr.pl_title}</div><div class="subtitle">${A(a)} · ${yr}</div>
@@ -1767,9 +1815,9 @@ function viewMov(){
   list.sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
   const groups={};list.forEach(e=>{const k=e.account+'|'+e.cat+'|'+e.type;(groups[k]=groups[k]||{acct:e.account,cat:e.cat,type:e.type,cur:e.currency,total:0,totalCLP:0,items:[]});groups[k].total+=e.amount;groups[k].totalCLP+=toCLP(e.amount,e.currency);groups[k].items.push(e);});
   const gArr=Object.values(groups).sort((a,b)=>(a.type===b.type?0:(a.type==='ingreso'?-1:1))||b.totalCLP-a.totalCLP);
-  let rows=gArr.map(gr=>{const c=acctColor(gr.acct),sign=gr.type==='ingreso'?'+':'−',col=gr.type==='ingreso'?'var(--green)':'var(--ink)';
+  let rows=gArr.map(gr=>{const c=acctColor(gr.acct),sign=gr.type==='ingreso'?'+':'−',col=gr.type==='ingreso'?'var(--green)':'var(--spendink, var(--ink))';
     const head=`<div class="mvgrp"><span class="mdot" style="background:${c}"></span><div class="mc"><div class="t">${cn(gr.acct,gr.cat)}</div><div class="s">${A(gr.acct)} · ${gr.items.length} mov.</div></div><div class="amt" style="color:${col}">${sign}${fmt(gr.total,gr.cur)}</div></div>`;
-    const items=gr.items.sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id).map(e=>`<div class="mv sub" onclick="openEdit(${e.id})"><div class="mc"><div class="s">${e.date}${e.type==='gasto'&&e.paid?' ✓':''}${e.note?' · '+escHtml(e.note):''}</div></div><div class="amt" style="color:${col}">${sign}${fmt(e.amount,e.currency)}</div></div>`).join('');
+    const items=gr.items.sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id).map(e=>`<div class="mv sub" onclick="openEdit(${e.id})"><div class="mc"><div class="s">${e.date}${e.type==='gasto'&&e.paid?' <span class=\"okk\">✓</span>':''}${e.note?' · '+escHtml(e.note):''}</div></div><div class="amt" style="color:${col}">${sign}${fmt(e.amount,e.currency)}</div></div>`).join('');
     return `<div class="mvgroup">${head}${items}</div>`;}).join('');
   if(!list.length)rows=`<div class="empty">${tr.mov_empty.replace('{m}',mLabel(sel))}</div>`;
   const g=filterAcct==='Todas'?gastoCLP(sel):actGasto(filterAcct,sel),ing=filterAcct==='Todas'?ingresoCLP(sel):actIng(filterAcct,sel),ah=ing-g;
