@@ -964,6 +964,13 @@ html.style-cdx:not(.dark) table.fit thead tr,
 html.style-cdx:not(.dark) table.fit thead th{background:#e4e4e4!important}
 html.style-cdx:not(.dark) table.fit thead th .hsh,
 html.style-cdx:not(.dark) table.fit thead th .hmonth{background:#e4e4e4!important;border-color:#e4e4e4!important;box-shadow:none!important}
+details.pmon{margin-top:10px;overflow:hidden;padding:0}
+details.pmon>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:13px 15px;cursor:pointer;font-weight:700}
+details.pmon>summary::-webkit-details-marker{display:none}
+details.pmon[open]>summary{border-bottom:1px solid rgba(128,128,128,.18)}
+details.pmon .psum{display:flex;gap:14px;font-variant-numeric:tabular-nums;font-size:13px}
+details.pmon .pmbody{padding:6px 15px 13px}
+details.pmon .ptot{margin-top:10px;border-top:1px solid rgba(128,128,128,.18);padding-top:8px}
 </style>
 </head>
 <body>
@@ -1223,7 +1230,7 @@ if(!window.fileStore){try{var __c=sessionStorage.getItem('financ.cloud');
     window.addEventListener('load',function(){
       var b=document.createElement('div');b.id='cloudro';
       b.textContent='Solo lectura · datos del Mac';
-      b.style.cssText='position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom));z-index:9999;background:rgba(20,20,24,.92);color:#fff;font:600 12px -apple-system,system-ui;padding:7px 14px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.28);pointer-events:none';
+      b.style.cssText='position:fixed;left:50%;transform:translateX(-50%);top:calc(10px + env(safe-area-inset-top));z-index:9999;background:rgba(20,20,24,.92);color:#fff;font:600 12px -apple-system,system-ui;padding:7px 14px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.28);pointer-events:none';
       document.body.appendChild(b);});}}catch(e){}}
 let state=load();
 /* Persist the Rev 12 category/link migration once. defaults() already changed the in-memory state above;
@@ -1543,21 +1550,25 @@ function noteOf(a,id,m){const e=entriesFor(a,'gasto',id,m).find(x=>x.note);retur
 function hdrNote(a,id){const c=catObj(a,id);const v=state.headerNotes&&(state.headerNotes[a+'|'+(c?c.es:'')]||state.headerNotes[a+'|'+cn(a,id)]);return v||'';}
 function curToggle(){const sc=state.sheetCur,act=sc==='native'?nativeCur(state.gridAcct):sc;return `<span class="seg2">`+[['CLP','CLP'],['EUR','EUR'],['MCLP','M'],['MMCLP','MM']].map(([v,lab])=>`<button class="${act===v?'on':''}" data-scur="${v}">${lab}</button>`).join('')+`</span>`;}
 function viewPlanillaPhone(){
-  const tr=L(),a=state.gridAcct,nat=nativeCur(a),cur=sheetCurFor(a),pid=PRIMARY[a],m=sel,D=v=>cf(v,nat,cur);
+  const tr=L(),a=state.gridAcct,nat=nativeCur(a),cur=sheetCurFor(a),pid=PRIMARY[a],D=v=>cf(v,nat,cur);
   const sw=['Chile','Irlanda','Mamá'].map(x=>`<button class="chip ${x===a?'on':''}" data-ga="${x}" style="${x===a?'background:'+acctColor(x)+';border-color:'+acctColor(x):''}">${A(x)}</button>`).join('');
   const tools=curToggle();
   const incIds=[pid].concat(state.cats[a].ingreso.filter(c=>c.id!==pid).map(c=>c.id));
-  const incRows=incIds.map(id=>{const v=cellI(a,id,m),dvv=conv(v,nat,cur);const isPrim=id===pid;return `<div class="prow"><button class="pname colname" data-a="${a}" data-id="${id}" style="color:var(--green)">${cn(a,id)}</button>${isPrim?`<span class="gcell pcell cbox incbox" data-fa="${a}" data-fid="${id}" data-fm="${m}" data-tp="ingreso">${cf(v,nat,cur)}</span>`:incCell(a,id,m,v,nat,cur).replace(/^<td class="inccol">|<\/td>$/g,'')}</div>`;}).join('');
-  const expRows=gastoColsFor(a).map(c=>{if(c.apt){const v=aptSum(a,m);return `<div class="prow"><span class="pname">${tr.apt}</span><span class="pcell cbox duep">${D(v)}</span></div>`;}const x=cellG(a,c.id,m),sv=cShow(x),isMortUF=(a==='Chile'&&c.id==='hipotecario'&&state.mortUF),disp=sv?(isMortUF?ufFmt(sv/valueFor(m)):D(sv)):fmt(0,cur),cls=x.paid?'paidp':(x.amount?'duep':''),nt=noteOf(a,c.id,m);return `<div class="prow"><button class="pname colname" data-a="${a}" data-id="${c.id}">${cn(a,c.id)}${isMortUF?' (UF)':''}</button><span class="gcell pcell cbox ${cls} ${nt?'hasnote':''}" data-fa="${a}" data-fid="${c.id}" data-fm="${m}">${disp}</span></div>`;}).join('');
-  const mirRows=(a==='Irlanda'?linkedChileCats():[]).map(c=>{const x=cellG('Chile',c.id,m),cls=x.paid?'paidp':(x.amount?'duep':'');return `<div class="prow"><span class="pname">${cn('Chile',c.id)}</span><span class="pcell cbox ${cls}">${cf(cShow(x),'CLP',cur)}</span></div>`;}).join('');
-  const inc=savPers(a,m),paid=gPaid(a,m),due=gDue(a,m),exp=gExp(a,m);
-  const totals=`<div class="prow"><span class="pname">${tr.sum_g}</span><b>${D(paid)}</b></div><div class="prow"><span class="pname" style="color:var(--green)">${tr.c_funds}</span><b style="color:var(--green)">${D(inc)}</b></div><div class="prow"><span class="pname">${tr.c_due}</span><b>${D(due)} <span style="opacity:.55">/ ${D(exp)}</span></b></div>`;
+  const bodyFor=(m)=>{
+    const incRows=incIds.map(id=>{const v=cellI(a,id,m);const isPrim=id===pid;return `<div class="prow"><button class="pname colname" data-a="${a}" data-id="${id}" style="color:var(--green)">${cn(a,id)}</button>${isPrim?`<span class="gcell pcell cbox incbox" data-fa="${a}" data-fid="${id}" data-fm="${m}" data-tp="ingreso">${cf(v,nat,cur)}</span>`:incCell(a,id,m,v,nat,cur).replace(/^<td class="inccol">|<\/td>$/g,'')}</div>`;}).join('');
+    const expRows=gastoColsFor(a).map(c=>{if(c.apt){const v=aptSum(a,m);return `<div class="prow"><span class="pname">${tr.apt}</span><span class="pcell cbox duep">${D(v)}</span></div>`;}const x=cellG(a,c.id,m),sv=cShow(x),isMortUF=(a==='Chile'&&c.id==='hipotecario'&&state.mortUF),disp=sv?(isMortUF?ufFmt(sv/valueFor(m)):D(sv)):fmt(0,cur),cls=x.paid?'paidp':(x.amount?'duep':''),nt=noteOf(a,c.id,m);return `<div class="prow"><button class="pname colname" data-a="${a}" data-id="${c.id}">${cn(a,c.id)}${isMortUF?' (UF)':''}</button><span class="gcell pcell cbox ${cls} ${nt?'hasnote':''}" data-fa="${a}" data-fid="${c.id}" data-fm="${m}">${disp}</span></div>`;}).join('');
+    const mirRows=(a==='Irlanda'?linkedChileCats():[]).map(c=>{const x=cellG('Chile',c.id,m),cls=x.paid?'paidp':(x.amount?'duep':'');return `<div class="prow"><span class="pname">${cn('Chile',c.id)}</span><span class="pcell cbox ${cls}">${cf(cShow(x),'CLP',cur)}</span></div>`;}).join('');
+    const inc=savPers(a,m),paid=gPaid(a,m),due=gDue(a,m),exp=gExp(a,m);
+    const totals=`<div class="prow"><span class="pname">${tr.sum_g}</span><b>${D(paid)}</b></div><div class="prow"><span class="pname" style="color:var(--green)">${tr.c_funds}</span><b style="color:var(--green)">${D(inc)}</b></div><div class="prow"><span class="pname">${tr.c_due}</span><b>${D(due)} <span style="opacity:.55">/ ${D(exp)}</span></b></div>`;
+    return `<div class="pmbody"><div class="psec" style="color:var(--green)">${tr.c_save}</div>${incRows}<div class="psec" style="margin-top:10px">${tr.mov_exp}</div>${expRows}${mirRows}<div class="ptot">${totals}</div></div>`;
+  };
+  const yr=+state.gridYear,months=MONTHS.filter(x=>x.slice(0,4)===String(yr));
+  const openM=months.includes(sel)?sel:(months.includes(defaultMonth())?defaultMonth():months[0]);
+  const secs=months.map(mm=>{const paid=gPaid(a,mm),inc=savPers(a,mm);return `<details class="card pmon"${mm===openM?' open':''}><summary><span>${mShort(mm)}</span><span class="psum"><b style="color:var(--green)">${D(inc)}</b><b>${D(paid)}</b></span></summary>${bodyFor(mm)}</details>`;}).join('');
+  const ynav=`<div class="filters" style="justify-content:center;align-items:center;gap:10px"><button class="chip" id="pyr" ${yr<=YMIN?'disabled':''}>‹</button><b style="min-width:56px;text-align:center">${yr}</b><button class="chip" id="nyr" ${yr>=YMAX?'disabled':''}>›</button></div>`;
   let refrow='';{const rl=(state.refsLabel&&state.refsLabel[state.lang])||tr.refs_lbl;refrow=`<div class="card" style="margin-top:14px"><div class="reflbl" id="refslbl" style="display:block;margin-bottom:8px">${escHtml(rl)} ✎</div><div class="filters" style="margin:0">`+(state.refsA[a]||[]).map((r,i)=>`<button class="chip ref" data-refa="${a}" data-ref="${i}">${escHtml(r.label)}: ${fmt(r.amount,nativeCur(a))}</button>`).join('')+`<button class="chip ref" data-refa="${a}" data-ref="new">+</button></div></div>`;}
-  return `<div class="title">${tr.pl_title}</div><div class="subtitle">${A(a)} · ${mLabel(m)}</div>
-    <div class="filters">${sw}</div><div class="filters">${tools}</div>
-    <div class="card"><div class="psec" style="color:var(--green)">${tr.c_save}</div>${incRows}</div>
-    <div class="card" style="margin-top:14px"><div class="psec">${tr.mov_exp}</div>${expRows}${mirRows}</div>
-    <div class="card" style="margin-top:14px">${totals}</div>${refrow}`;
+  return `<div class="title">${tr.pl_title}</div><div class="subtitle">${A(a)} · ${yr}</div>
+    <div class="filters">${sw}</div><div class="filters">${tools}</div>${ynav}${secs}${refrow}`;
 }
 function phoneMode(){return !!state.phone||window.matchMedia('(max-width:640px)').matches;}
 function viewPlanilla(){
@@ -1661,6 +1672,7 @@ function bindPlanilla(){
     fw.addEventListener('dragend',()=>{dragSrc=null;document.querySelectorAll('.copysrc,.dropok').forEach(x=>x.classList.remove('copysrc','dropok'));});}
   if(!window.__cpBound){window.__cpBound=1;document.addEventListener('keydown',cpKey);}
   document.querySelectorAll('.chip[data-ga]').forEach(b=>b.onclick=()=>{state.gridAcct=b.dataset.ga;state.sheetCur=(b.dataset.ga==='Irlanda')?'EUR':'native';save();render();});
+  {const py=document.getElementById('pyr'),ny=document.getElementById('nyr');if(py)py.onclick=()=>{const y=+state.gridYear;if(y>YMIN){state.gridYear=String(y-1);save();render();}};if(ny)ny.onclick=()=>{const y=+state.gridYear;if(y<YMAX){state.gridYear=String(y+1);save();render();}};}
   const acb=document.getElementById('addcol');if(acb)acb.onclick=()=>openAddCat(state.gridAcct);
   {const ub=document.getElementById('unhidebtn');if(ub)ub.onclick=()=>openUnhide(state.gridAcct);}
   const pb=document.getElementById('palbtn');if(pb)pb.onclick=openPalette;
