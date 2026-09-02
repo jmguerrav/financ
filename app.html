@@ -340,8 +340,8 @@ body.hasbg{background:transparent}body.hasbg #bglayer,body.hasbg #bgveil{display
 body.hasbg .topbar{background:transparent;border-bottom-color:transparent}
 .kpi.danger{background:#9d453c}.kpi.danger .lbl,.kpi.danger .cap{color:#f2d6d1}.kpi.danger .val{color:#fff}
 .kpi.good{background:#487a5b}.kpi.good .lbl,.kpi.good .cap{color:#d7e7dd}.kpi.good .val{color:#fff}
-.kpi.zero{background:#e6ece7}.kpi.zero .lbl,.kpi.zero .cap{color:#5a7d66}.kpi.zero .val{color:#3f6b50}
-html.dark .kpi.zero{background:#16361f}html.dark .kpi.zero .lbl,html.dark .kpi.zero .cap{color:#7fd79a}html.dark .kpi.zero .val{color:#cdeed4}
+.kpi.zero{background:#dcdce1}.kpi.zero .lbl,.kpi.zero .cap{color:#7a7a84}.kpi.zero .val{color:#55555e}
+html.dark .kpi.zero{background:#2a2a30}html.dark .kpi.zero .lbl,html.dark .kpi.zero .cap{color:#9a9aa2}html.dark .kpi.zero .val{color:#c2c2ca}
 .kpi.cblue{background:#41597a}.kpi.cblue .lbl,.kpi.cblue .cap{color:#d5e0ee}.kpi.cblue .val{color:#fff}
 html.dark .kpi.cblue{background:#16324c}html.dark .kpi.cblue .lbl,html.dark .kpi.cblue .cap{color:#9fc2e6}html.dark .kpi.cblue .val{color:#fff}
 /* account-coloured KPI shape (bg set inline to the account accent) + paid=grey */
@@ -352,7 +352,7 @@ html.dark .kpi.kpaid{background:#3a3a42}html.dark .kpi.kpaid .lbl,html.dark .kpi
 .cards3 .card{display:flex;flex-direction:column}.cards3 .legend{margin-top:auto}
 .fabmini{position:fixed;right:max(18px,env(safe-area-inset-right));width:50px;height:50px;border-radius:50%;border:0;background:var(--ink);color:var(--card);box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer;z-index:40;display:none;align-items:center;justify-content:center}.fabmini svg{width:22px;height:22px}
 .fabmini.show{display:flex}
-#nightbtn{bottom:calc(150px + env(safe-area-inset-bottom))}#bgbtn{bottom:calc(208px + env(safe-area-inset-bottom))}#phonebtn{bottom:calc(266px + env(safe-area-inset-bottom))}
+#nightbtn{bottom:calc(150px + env(safe-area-inset-bottom))}#bgbtn{bottom:calc(208px + env(safe-area-inset-bottom))}
 .spentrow{display:flex;align-items:center;gap:10px;margin:11px 0}.spentrow .sl{width:62px;font-size:13px;font-weight:700}.spentrow .sb{flex:1;height:14px;background:var(--track);border-radius:999px;overflow:hidden}.spentrow .sf{height:100%;border-radius:999px}.spentrow .sv{font-size:12px;color:var(--sub);font-variant-numeric:tabular-nums;white-space:nowrap}
 .title.edit{cursor:pointer}
 .hue{width:30px;height:30px;border:none;border-radius:50%;padding:0;background:none;cursor:pointer;overflow:hidden}.hue::-webkit-color-swatch-wrapper{padding:0}.hue::-webkit-color-swatch{border:1px solid var(--hair);border-radius:50%}.hue::-moz-color-swatch{border:1px solid var(--hair);border-radius:50%}
@@ -417,7 +417,7 @@ body.phone .topbar .fabmini,body.phone .topbar #fab,body.realphone .topbar .fabm
 body.phone .topbar .fabmini svg,body.realphone .topbar .fabmini svg{width:16px;height:16px}
 body.phone .topbar #fab,body.realphone .topbar #fab{display:none!important}
 body.phone .topbar #fab.show,body.realphone .topbar #fab.show{display:inline-flex!important;background:var(--blue);color:var(--onacc,#fff);border-color:var(--blue)}
-body.realphone #phonebtn{display:none!important}
+
 tr.yrstart td{border-top:2px solid var(--ink)}html.dark tr.yrstart td{border-top-color:#55555e}
 /* weeks: a breakdown line between months */
 table.fit tr.wkmonthsep td{border-top:2px solid rgba(80,80,90,.35)}html.dark table.fit tr.wkmonthsep td{border-top-color:rgba(255,255,255,.22)}
@@ -594,7 +594,7 @@ html.claude .title,html.claude .cardhead h3,html.claude .sheet h3,html.claude .m
 html.claude .card,html.claude .sheet,html.claude #fbai-panel{background:var(--glass);border-color:var(--glassbrd);box-shadow:var(--shadow),var(--glasshi)}
 html.claude .kpi.danger{background:linear-gradient(160deg,var(--red),#8F3F34)}
 html.claude .kpi.good{background:linear-gradient(160deg,var(--green),#4F6C48)}
-html.claude .kpi.zero{background:#E8DDC9}
+html.claude .kpi.zero{background:#DED3C1}
 html.claude .kpi.zero .lbl,html.claude .kpi.zero .cap,html.claude .kpi.zero .val{color:#5A513F}
 html.claude.dark .kpi.zero{background:#383226}
 html.claude.dark .kpi.zero .lbl,html.claude.dark .kpi.zero .cap,html.claude.dark .kpi.zero .val{color:#D4C4A8}
@@ -1019,6 +1019,25 @@ details.pmon>summary{gap:8px}
 .pmon .pmlab{white-space:nowrap;flex:none}
 .pmon .psum{flex:1;justify-content:flex-end;min-width:0;flex-wrap:nowrap}
 .pmon .psum b{white-space:nowrap;padding:4px 8px;font-size:12px}
+
+/* summary: cajas de categoria y KPI en gris (pagado) / rojo (por pagar) — pedido Jose 02-Sep */
+.glass.gdue{background:#f6dede!important;border-color:#e3aeae!important}
+.glass.gdue .glabel,.glass.gdue .glabel small{color:#8c2f27!important}
+.glass.gdue .gfill{display:none}
+.glass.gpaid{background:#dcdce1!important;border-color:#c2c2ca!important}
+.glass.gpaid .glabel,.glass.gpaid .glabel small{color:#6c6c74!important}
+html.dark .glass.gdue{background:#3a2426!important;border-color:#6a4446!important}
+html.dark .glass.gdue .glabel,html.dark .glass.gdue .glabel small{color:#ee9a9a!important}
+html.dark .glass.gpaid{background:#2a2a30!important;border-color:#54545c!important}
+html.dark .glass.gpaid .glabel,html.dark .glass.gpaid .glabel small{color:#9a9aa2!important}
+html.style-cdx .summary-view .summary-kpis .kpi.danger{background:#f6e3e0!important;border-color:#e4b8b2!important}
+html.style-cdx .summary-view .summary-kpis .kpi.danger .val{color:#8c2f27!important}
+html.style-cdx .summary-view .summary-kpis .kpi.zero{background:#e7e7ea!important;border-color:#cfcfd6!important}
+html.style-cdx .summary-view .summary-kpis .kpi.zero .val{color:#55555e!important}
+html.style-cdx.dark .summary-view .summary-kpis .kpi.danger{background:#3a2426!important;border-color:#6a4446!important}
+html.style-cdx.dark .summary-view .summary-kpis .kpi.danger .val{color:#ee9a9a!important}
+html.style-cdx.dark .summary-view .summary-kpis .kpi.zero{background:#26262c!important;border-color:#3a3a42!important}
+html.style-cdx.dark .summary-view .summary-kpis .kpi.zero .val{color:#b8b8c2!important}
 </style>
 </head>
 <body>
@@ -1052,7 +1071,7 @@ details.pmon>summary{gap:8px}
   <button class="tbtn" id="savebtn" title="Guardar ahora — Cmd/Ctrl+S"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg><b id="savebtnlbl" data-tx="save"></b></button>
   <button class="fabmini" id="nightbtn" title="Día / Noche"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.8A8 8 0 1 1 11.2 3 6.2 6.2 0 0 0 21 12.8z"/></svg></button>
   <button class="fabmini" id="bgbtn" title="Fondo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.8"/><path d="M21 16l-5-5L4 20"/></svg></button>
-  <button class="fabmini" id="phonebtn" title="Vista móvil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></button>
+  
   <button class="fabmini" id="pinbtn" title="Mantener al frente / Keep on top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5M5 9l2-6h10l2 6M5 9h14M8 9l1 8h6l1-8"/></svg></button>
   <button class="tbtn" id="mcal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></button>
   <span class="mnav" id="mnav"><button id="mprev">‹</button><span class="lbl" id="mlabel">—</span><button id="mnext">›</button></span>
@@ -1200,10 +1219,9 @@ function defaults(s){
   s.entries.forEach(e=>{if(e.paid===undefined)e.paid=true;});
   // remove Ireland 'Overtime/Savings' income: merge its entries into 'Other'
   if(s.cats&&s.cats.Irlanda){const ov=s.cats.Irlanda.ingreso.find(c=>c.id==='overtime_savings');if(ov){let other=s.cats.Irlanda.ingreso.find(c=>c.id==='otros');if(!other){other={id:'otros',es:'Otros',en:'Other'};s.cats.Irlanda.ingreso.push(other);}s.entries.forEach(e=>{if(e.account==='Irlanda'&&e.cat==='overtime_savings')e.cat='otros';});s.cats.Irlanda.ingreso=s.cats.Irlanda.ingreso.filter(c=>c.id!=='overtime_savings');}
-    // remove Ireland expense 'Other' column (keep only income Other next to WTL)
-    const gi=s.cats.Irlanda.gasto.findIndex(c=>c.id==='otros');if(gi>=0){s.cats.Irlanda.gasto.splice(gi,1);s.entries=s.entries.filter(e=>!(e.account==='Irlanda'&&e.type==='gasto'&&e.cat==='otros'));if(s.forecast&&s.forecast.Irlanda)delete s.forecast.Irlanda.otros;}
-    // ensure an income 'Other' exists right after WTL
-    if(!s.cats.Irlanda.ingreso.find(c=>c.id==='otros'))s.cats.Irlanda.ingreso.push({id:'otros',es:'Otros',en:'Other'});}
+    /* (reglas retiradas 02-Sep-2026: borraban el gasto 'Other' de Irlanda en cada carga y creaban uno de
+       ingreso — Jose pidio de vuelta la columna de GASTO Other junto a Sigma Spend; era el segundo saboteador de rev16/rev18) */
+    s.cats.Irlanda.ingreso=s.cats.Irlanda.ingreso.filter(c=>c.id!=='otros');}
   // Chile: rename 'Otros ingresos' income to Scotiabank
   if(s.cats&&s.cats.Chile){const ci=s.cats.Chile.ingreso.find(c=>c.id==='otros_ingresos');if(ci&&(ci.es==='Otros ingresos'||ci.en==='Other income')){ci.es='Scotiabank';ci.en='Scotiabank';}}
   // one-time: merge imported Excel notes into matching entries
@@ -1248,8 +1266,8 @@ function defaults(s){
     s.rev10mig=true;}
   // one-time Rev.12: mark Jan/Feb/Mar 2026 mortgage as paid
   if(!s.rev12mig){['2026-01','2026-02','2026-03'].forEach(m=>{const es=(s.entries||[]).filter(e=>e.account==='Chile'&&e.type==='gasto'&&e.cat==='hipotecario'&&e.date.slice(0,7)===m);if(es.length){es.forEach(e=>e.paid=true);}else{const amt=Math.round(((s.uf&&s.uf.projUF)||11.1)*((s.uf&&s.uf.value)||39000));s.entries.push({id:nextId(),account:'Chile',type:'gasto',cat:'hipotecario',amount:amt,currency:'CLP',date:m+'-15',note:'',paid:true});}});s.rev12mig=true;}
-  // every load: Ireland must never have an "Other"/"Otros" column (income or expense)
-  if(s.cats&&s.cats.Irlanda)['gasto','ingreso'].forEach(tp=>{s.cats.Irlanda[tp]=s.cats.Irlanda[tp].filter(c=>{const bad=/^(other|otros)$/i.test((c.en||'').trim())||/^(other|otros)$/i.test((c.es||'').trim());if(bad)s.entries=s.entries.filter(e=>!(e.account==='Irlanda'&&e.cat===c.id&&e.type===tp));return !bad;});});
+  /* (regla retirada 02-Sep-2026: "Ireland must never have an Other column" — Jose pidio la columna de vuelta;
+     esta purga corria en CADA carga y era la que des-hacia las migraciones rev16/rev18) */
   // Chile apartment expenses: keep the historical cc_intl ID/entries, but it is no longer a mirrored Irish debt.
   if(s.cats&&s.cats.Chile){const cc=s.cats.Chile.gasto.find(c=>c.id==='cc_intl');if(cc){cc.es='Expenses (de mi depto)';cc.en='Expenses (de mi depto)';}}
   // Rev26/28: remove Ireland "S. Mom" + "S. Loreto"; rename "S. Dad" -> "S. José"
@@ -1263,6 +1281,8 @@ function defaults(s){
   /* Rev 16: Ireland gains a trailing "Other" expense column. Pushed LAST so it renders immediately left
      of the Sigma Spend calc block, bringing every account to 19 columns (Chile 19, Ireland was 18, Loreto 19). */
   if(!s.rev16IrlOther&&s.cats&&s.cats.Irlanda){if(!s.cats.Irlanda.gasto.some(c=>c.id==='otros'))s.cats.Irlanda.gasto.push({id:'otros',es:'Other',en:'Other'});s.rev16IrlOther=true;}
+  /* Rev18: la columna 'otros' de rev16 se borro despues de migrar (flag puesto, columna ausente) — se re-agrega para volver a 19 columnas. */
+  if(!s.rev18IrlOtros&&s.cats&&s.cats.Irlanda){if(!s.cats.Irlanda.gasto.some(c=>c.id==='otros'))s.cats.Irlanda.gasto.push({id:'otros',es:'Other',en:'Other'});s.rev18IrlOtros=true;}
   // Rev26: Loreto/Mamá -> remove the last expense column ("TC/Otros") left of Spend
   if(s.cats&&s.cats['Mamá']){s.cats['Mamá'].gasto=s.cats['Mamá'].gasto.filter(c=>{if(c.id==='tc_otros'){s.entries=s.entries.filter(e=>!(e.account==='Mamá'&&e.cat==='tc_otros'));return false;}return true;});}
   return s;
@@ -1283,7 +1303,7 @@ if(!window.fileStore){try{var __c=sessionStorage.getItem('financ.cloud');
 let state=load();
 /* Persist the Rev 12 category/link migration once. defaults() already changed the in-memory state above;
    this write makes the renamed, unlinked category durable without recreating or moving any entry. */
-if(!state.rev12ExpensesDepto||!state.rev14Saved||!state.rev16Saved){state.rev12ExpensesDepto=true;state.rev14Saved=true;state.rev16Saved=true;save();}
+if(!state.rev12ExpensesDepto||!state.rev14Saved||!state.rev16Saved||!state.rev18Saved){state.rev12ExpensesDepto=true;state.rev14Saved=true;state.rev16Saved=true;state.rev18Saved=true;save();}
 let view='resumen',sel=defaultMonth(),filterAcct='Todas',editId=null,pickYear=2026;
 
 function L(){return T[state.lang]||T.es;}
@@ -1403,7 +1423,7 @@ function applyTheme(){
     document.documentElement.classList.toggle('dark',d);
   } else { document.documentElement.classList.toggle('dark',!!state.dark); }
   const bl=document.getElementById('bglayer');document.body.classList.toggle('hasbg',!!state.bg);if(state.bg)bl.style.backgroundImage='url('+state.bg+')';
-  {const narrow=window.matchMedia('(max-width:640px)').matches;document.body.classList.toggle('phone',!!state.phone||narrow);document.body.classList.toggle('realphone',narrow);}
+  {const narrow=window.matchMedia('(max-width:640px)').matches;document.body.classList.toggle('phone',narrow);document.body.classList.toggle('realphone',narrow);}
   const hue=document.getElementById('hue');if(hue)hue.value=state.bgColor||(state.dark?'#0e0e10':'#f5f5f7');}
 function setBgFromFile(file){if(!file)return;const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>{const max=1400;const sc=Math.min(1,max/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext('2d').drawImage(img,0,0,c.width,c.height);try{state.bg=c.toDataURL('image/jpeg',0.72);}catch(e){state.bg=r.result;}save();applyTheme();};img.src=r.result;};r.readAsDataURL(file);}
 function openBgSheet(){const tr=L();openSheet(`<h3>${tr.bg_title}</h3><button class="btn primary" id="bg_pick">${tr.bg_choose}</button>${state.bg?`<button class="btn danger" id="bg_rm" style="margin-top:10px">${tr.bg_remove}</button>`:''}<button class="btn ghost" id="bg_cancel" style="margin-top:10px">${tr.f_cancel}</button>`);
@@ -1435,7 +1455,7 @@ function render(){
   const tr=L();document.documentElement.lang=state.lang;applyTheme();
   document.getElementById('nightbtn').classList.toggle('show',true);
   document.getElementById('bgbtn').classList.toggle('show',true);
-  document.getElementById('phonebtn').classList.toggle('show',true);
+  
   document.getElementById('brand').textContent=tr.brand;document.getElementById('langbtn').textContent=state.lang==='es'?'EN':'ES';
   {const dt=document.getElementById('dectop');if(dt)dt.classList.toggle('on',!!state.dec);}
   document.getElementById('claudebtn').classList.toggle('on',!!state.claude);
@@ -1520,7 +1540,7 @@ function accountCard(a){
   const view=(state.cardView&&state.cardView[a])||'plan';
   let bars;
   if(!ids.length){bars=`<div class="empty">${tr.no_plan}</div>`;}
-  else{bars='<div class="glasses">'+ids.map(id=>{const plan=pl[id],got=rec[id]||0,cg=cellG(a,id,sel),pct=plan>0?Math.min(got/plan*100,100):(got>0?100:0),over=got>plan+.5,zero=got<=0.5,paidAll=cg.has&&cg.paid&&got>0.5,st=over?'over':(zero?'g0':(paidAll?'gpaid':''));return `<div class="glass ${st}" data-flip="${id}" title="${escAttr(cn(a,id))}: ${fmtN(got,cur)} / ${fmtN(plan,cur)}"><div class="gfill" style="height:${pct}%;background:${acctColor(a)}"></div><span class="glabel">${cn(a,id)}<small>${fmtN(got,cur)}/${fmtN(plan,cur)}</small></span></div>`;}).join('')+'</div>';}
+  else{bars='<div class="glasses">'+ids.map(id=>{const plan=pl[id],got=rec[id]||0,cg=cellG(a,id,sel),pct=plan>0?Math.min(got/plan*100,100):(got>0?100:0),isPaid=cg.has&&cg.paid&&got>0.5,isDue=!isPaid&&(got>0.5||plan>0.5),st=isPaid?'gpaid':(isDue?'gdue':'g0');return `<div class="glass ${st}" data-flip="${id}" title="${escAttr(cn(a,id))}: ${fmtN(got,cur)} / ${fmtN(plan,cur)}"><div class="gfill" style="height:${pct}%;background:${acctColor(a)}"></div><span class="glabel">${cn(a,id)}<small>${fmtN(got,cur)}/${fmtN(plan,cur)}</small></span></div>`;}).join('')+'</div>';}
   const body=view==='plan'?bars:miniChart(a,view);
   const tog=`<button class="chip cardtog" data-cardtog="${a}">${view==='plan'?tr.cv_plan:(view==='spend'?tr.cv_spend:tr.cv_save)}</button>`;
   const due=gDue(a,sel),paid=gPaid(a,sel);let extra='';if(a==='Irlanda'){const d=debtEUR(sel);if(d>0)extra=` · ${tr.cl_chile} ${fmt(d,'EUR')}`;}
@@ -1618,7 +1638,7 @@ function viewPlanillaPhone(){
   return `<div class="title">${tr.pl_title}</div><div class="subtitle">${A(a)} · ${yr}</div>
     <div class="filters">${sw}</div><div class="filters">${tools}</div>${ynav}${secs}${refrow}`;
 }
-function phoneMode(){return !!state.phone||window.matchMedia('(max-width:640px)').matches;}
+function phoneMode(){return window.matchMedia('(max-width:640px)').matches;} /* la vista movil ya no se fuerza a mano: solo el ancho decide */
 function viewPlanilla(){
   if(phoneMode())return viewPlanillaPhone();
   const tr=L(),a=state.gridAcct,nat=nativeCur(a),cur=sheetCurFor(a),pid=PRIMARY[a],curM=defaultMonth();
@@ -2005,7 +2025,7 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{if(t.dataset.v==='aj
 document.getElementById('fab').onclick=()=>{view==='fuel'?openFuel(null):openAdd();};document.getElementById('scrim').onclick=closeSheet;
 document.getElementById('nightbtn').onclick=()=>{state.bgColor=null;state.dark=!state.dark;save();render();};
 document.getElementById('claudebtn').onclick=()=>{state.claude=!state.claude;save();render();};
-document.getElementById('phonebtn').onclick=()=>{state.phone=!state.phone;save();render();};
+
 document.getElementById('dectop').onclick=()=>{state.dec=!state.dec;save();render();};
 function applyPin(){if(window.appWin&&window.appWin.setPin)window.appWin.setPin(!!state.pinTop);const p=document.getElementById('pinbtn');if(p)p.classList.toggle('on',!!state.pinTop);}
 document.getElementById('pinbtn').onclick=()=>{state.pinTop=!state.pinTop;save();applyPin();};
