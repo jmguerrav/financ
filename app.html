@@ -1218,7 +1218,7 @@ function defaults(s){
    purpose: this is read-only until two-way sync exists, and the badge says so out loud rather than
    letting an edit look like it stuck. */
 if(!window.fileStore){try{var __c=sessionStorage.getItem('financ.cloud');
-  if(!__c&&localStorage.getItem('financ.tok')){location.replace('index.html');} /* atajo guardado sobre app.html: cada arranque abre sesión nueva, así que vuelve a la puerta en vez de enseñar la demo en silencio */
+  if(!__c){location.replace('index.html');} /* sin sesion cloud -> SIEMPRE a la puerta: una web-app de iOS arranca con almacen aislado y vacio, nunca debe caer al demo */ /* atajo guardado sobre app.html: cada arranque abre sesión nueva, así que vuelve a la puerta en vez de enseñar la demo en silencio */
   if(__c){window.fileStore={initial:__c,save:function(){},cloud:true};
     window.addEventListener('load',function(){
       var b=document.createElement('div');b.id='cloudro';
