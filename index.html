@@ -1,0 +1,99 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Financ_">
+<title>Financ_</title>
+<style>
+  :root{color-scheme:light dark}
+  body{margin:0;min-height:100dvh;display:grid;place-items:center;background:#f5f5f7;
+       font:15px/1.45 -apple-system,system-ui,sans-serif;color:#1d1d1f;padding:24px}
+  @media(prefers-color-scheme:dark){body{background:#0f1015;color:#eef0f6}}
+  .card{width:100%;max-width:380px}
+  h1{font-size:22px;margin:0 0 4px;letter-spacing:-.02em}
+  p.sub{margin:0 0 22px;opacity:.6;font-size:13.5px}
+  label{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;opacity:.55;margin:14px 0 6px}
+  input{width:100%;box-sizing:border-box;font:inherit;padding:12px 14px;border-radius:12px;
+        border:1px solid rgba(128,128,140,.35);background:rgba(255,255,255,.9)}
+  @media(prefers-color-scheme:dark){input{background:rgba(255,255,255,.06);color:#eef0f6;border-color:rgba(255,255,255,.16)}}
+  button{width:100%;margin-top:20px;font:inherit;font-weight:700;padding:13px;border:0;border-radius:12px;
+         background:#4353ff;color:#fff;cursor:pointer}
+  button[disabled]{opacity:.55}
+  .msg{margin-top:14px;font-size:13px;min-height:19px}
+  .err{color:#e5484d}.ok{color:#26a968}
+  .hint{margin-top:18px;font-size:12px;opacity:.5;line-height:1.5}
+</style>
+<body>
+<div class="card">
+  <h1>Financ_</h1>
+  <p class="sub">Tus datos, cifrados, desde GitHub.</p>
+
+  <label for="tok">Token de GitHub</label>
+  <input id="tok" type="password" autocomplete="off" placeholder="github_pat_…">
+
+  <label for="pass">Contraseña de cifrado</label>
+  <input id="pass" type="password" autocomplete="off" placeholder="la que usaste al publicar">
+
+  <button id="go">Abrir</button>
+  <div class="msg" id="msg"></div>
+  <div class="hint">El token y la contraseña se guardan solo en este teléfono. Nadie más los ve —
+    ni siquiera el repositorio, que solo contiene datos cifrados.</div>
+</div>
+<script>
+/* Config: el repo PRIVADO donde vive el blob cifrado. El sitio (público) solo trae este código. */
+const CFG = { owner: 'jmguerrav', repo: 'financ-data', path: 'finance_data.enc', branch: 'main' };
+
+const $ = id => document.getElementById(id);
+const say = (t, cls) => { const m = $('msg'); m.textContent = t; m.className = 'msg ' + (cls || ''); };
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+
+async function decrypt(env, pass){
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name:'PBKDF2', salt:b64(env.kdf.salt), iterations:env.kdf.iterations, hash:env.kdf.hash },
+    km, { name:'AES-GCM', length:256 }, false, ['decrypt']);
+  return new TextDecoder().decode(await crypto.subtle.decrypt({ name:'AES-GCM', iv:b64(env.iv) }, key, b64(env.ct)));
+}
+
+async function fetchBlob(token){
+  // Media type "raw": la respuesta es el archivo tal cual. La variante base64 de la Contents API
+  // se corta en 1 MB y el blob ya iba por el 69% de ese límite — así no hay acantilado (raw llega a 100 MB).
+  const url = `https://api.github.com/repos/${CFG.owner}/${CFG.repo}/contents/${CFG.path}?ref=${CFG.branch}`;
+  const r = await fetch(url, { headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github.raw+json' } });
+  if (r.status === 401) throw new Error('Token rechazado (401). ¿Caducó?');
+  if (r.status === 404) throw new Error('No encuentro el archivo. Revisa que el repo y la ruta existan y que el token tenga acceso.');
+  if (!r.ok) throw new Error('GitHub respondió ' + r.status);
+  return await r.json();
+}
+
+async function open_(){
+  const token = $('tok').value.trim(), pass = $('pass').value;
+  if (!token || !pass) return say('Faltan el token o la contraseña.', 'err');
+  $('go').disabled = true; say('Descargando…');
+  try{
+    const env = await fetchBlob(token);
+    say('Descifrando…');
+    const json = await decrypt(env, pass);
+    JSON.parse(json);                                  // no seguir con un blob corrupto
+    sessionStorage.setItem('financ.cloud', json);      // por pestaña; se borra al cerrarla
+    localStorage.setItem('financ.tok', token);
+    localStorage.setItem('financ.pass', pass);
+    say('Listo', 'ok');
+    location.replace('app.html');
+  }catch(e){
+    // GCM falla si la contraseña no es la correcta: mensaje humano, no un volcado cripto.
+    // Safari deja e.message vacío en un descifrado fallido; el nombre de la DOMException es lo fiable.
+    const bad = (e && e.name === 'OperationError') || /operation-specific|decrypt/i.test((e && e.message) || '');
+    say(bad ? 'Contraseña incorrecta.' : (e.message || 'Error'), 'err');
+    $('go').disabled = false;
+  }
+}
+$('go').onclick = open_;
+$('pass').addEventListener('keydown', e => { if (e.key === 'Enter') open_(); });
+
+// Ya configurado: entra solo.
+(function(){
+  const t = localStorage.getItem('financ.tok'), p = localStorage.getItem('financ.pass');
+  if (t && p){ $('tok').value = t; $('pass').value = p; open_(); }
+})();
+</script>
